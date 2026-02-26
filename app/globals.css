@@ -1,0 +1,208 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================
+   THEME VARIABLES
+   ========================= */
+
+:root {
+  --background: #ffffff;
+  --foreground: #111827;
+  --border: #e5e7eb;
+  --muted: #6b7280;
+  --accent: #2563eb;
+}
+
+html.dark {
+  --background: #0f172a;
+  --foreground: #f9fafb;
+  --border: #334155;
+  --muted: #9ca3af;
+  --accent: #60a5fa;
+}
+
+/* =========================
+   GLOBAL BASE
+   ========================= */
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* =========================
+   HEADER
+   ========================= */
+
+header {
+  background-color: var(--background);
+  color: var(--foreground);
+  border-bottom: 1px solid var(--border);
+}
+
+/* =========================
+   SIDEBAR
+   ========================= */
+
+aside[data-testid="sidebar"] {
+  background-color: var(--background);
+  border-right: 1px solid var(--border);
+}
+
+aside[data-testid="sidebar"] a {
+  color: var(--foreground);
+  text-decoration: none;
+  display: block;
+  padding: 4px 0;
+}
+
+aside[data-testid="sidebar"] a:hover {
+  text-decoration: underline;
+}
+
+/* =========================
+   MAIN CONTENT (MARKDOWN)
+   ========================= */
+
+.prose {
+  color: var(--foreground);
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  scroll-margin-top: 80px;
+}
+
+.prose p {
+  color: var(--foreground);
+}
+
+.prose code {
+  background-color: #e5e7eb;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+html.dark .prose code {
+  background-color: #1e293b;
+}
+
+/* Code blocks */
+.prose pre {
+  background-color: #020617;
+  color: #e5e7eb;
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+/* =========================
+   TOC
+   ========================= */
+
+aside[data-testid="table-of-contents"] {
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  padding: 1rem;
+}
+
+aside[data-testid="table-of-contents"] a {
+  color: var(--accent);
+  display: block;
+  margin-top: 0.25rem;
+  text-decoration: none;
+}
+
+aside[data-testid="table-of-contents"] a[data-active="true"] {
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* =========================
+   SEARCH
+   ========================= */
+
+input[data-testid="search-input"] {
+  background-color: var(--background);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+}
+
+/* =========================
+   BUTTONS
+   ========================= */
+
+button,
+a[data-testid^="version-option"] {
+  border: 1px solid var(--border);
+  color: var(--foreground);
+  background: transparent;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+button:hover,
+a[data-testid^="version-option"]:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+html.dark button:hover,
+html.dark a[data-testid^="version-option"]:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* =========================
+   LINKS
+   ========================= */
+
+a {
+  color: var(--accent);
+}
+
+a:hover {
+  text-decoration: underline;
+}
