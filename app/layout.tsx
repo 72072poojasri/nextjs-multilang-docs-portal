@@ -15,7 +15,7 @@ export default function RootLayout({
         <Header />
 
         <div className="flex flex-1">
-          <Sidebar />
+          <Sidebar lang="en" version="v1" />
 
           <main className="flex-1 p-6">
             {children}

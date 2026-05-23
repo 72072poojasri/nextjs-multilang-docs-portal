@@ -43,7 +43,7 @@ export default function FeedbackWidget() {
           data-testid="feedback-success-message"
           className="text-green-600 font-medium"
         >
-          Thank you for your feedback! 🙌
+          Thank you for your feedback! 
         </div>
       )}
     </div>

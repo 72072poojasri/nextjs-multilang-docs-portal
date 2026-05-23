@@ -8,8 +8,54 @@ import { notFound } from "next/navigation";
 
 import TableOfContents from "@/components/TableOfContents";
 import FeedbackWidget from "@/components/FeedbackWidget";
+import CodeBlock from "@/components/CodeBlock";
 
 export const revalidate = 60;
+
+/* ✅ ISR Static Generation */
+export async function generateStaticParams() {
+  const docsPath = path.join(process.cwd(), "_docs");
+
+  const params: {
+    lang: string;
+    version: string;
+    slug: string;
+  }[] = [];
+
+  const languages = fs
+    .readdirSync(docsPath)
+    .filter((file) =>
+      fs.statSync(path.join(docsPath, file)).isDirectory()
+    );
+
+  languages.forEach((lang) => {
+    const langPath = path.join(docsPath, lang);
+
+    const versions = fs
+      .readdirSync(langPath)
+      .filter((file) =>
+        fs.statSync(path.join(langPath, file)).isDirectory()
+      );
+
+    versions.forEach((version) => {
+      const versionPath = path.join(langPath, version);
+
+      const files = fs
+        .readdirSync(versionPath)
+        .filter((file) => file.endsWith(".md"));
+
+      files.forEach((file) => {
+        params.push({
+          lang,
+          version,
+          slug: file.replace(".md", ""),
+        });
+      });
+    });
+  });
+
+  return params;
+}
 
 export default async function DocPage({
   params,
@@ -20,7 +66,6 @@ export default async function DocPage({
     slug: string;
   }>;
 }) {
-  // ✅ Next.js requires awaiting params
   const { lang, version, slug: docSlug } = await params;
 
   const filePath = path.join(
@@ -36,9 +81,9 @@ export default async function DocPage({
   }
 
   const fileContent = fs.readFileSync(filePath, "utf8");
+
   const { content } = matter(fileContent);
 
-  // ✅ Add heading IDs for TOC
   const processed = await remark()
     .use(remarkSlug as any)
     .use(html)
@@ -48,13 +93,17 @@ export default async function DocPage({
 
   return (
     <div className="flex gap-10 px-8 py-6">
-      {/* Main content + Feedback */}
+      {/* Main Content */}
       <div className="flex-1">
         <article
           data-testid="doc-content"
           className="prose max-w-none dark:prose-invert"
-          dangerouslySetInnerHTML={{ __html: contentHtml }}
-        />
+        >
+          <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
+
+          {/* ✅ Code Block Copy */}
+          <CodeBlock children="npm install next react react-dom" />
+        </article>
 
         {/* Feedback Widget */}
         <FeedbackWidget />
